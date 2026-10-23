@@ -15,144 +15,6 @@ interface Paquete {
   destinatario: Destinatario;
 }
 
-
-/**----------------------------BLOQUE DE ENRIQUE ------------ */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function calcularCostoEnvio(p: Paquete): number {
-    let total = 15 + (2.5 * p.distanciaKm) + (1.5 * p.pesoKg);
-    if (p.esFragil) {
-        total += 20;
-    }
-
-    if (p.express) {
-        total *= 1.25;
-    }
-
-    return total;
-}
-
-function ordPorDistancia (lista: Paquete[]) : Paquete [] {
-    return [...lista].sort(
-        (a, b) => a.distanciaKm - b.distanciaKm
-    )
-}
-    const paquetesOrdenados = ordPorDistancia(dbPaquete);
-    console.log(paquetesOrdenados);
-
 const listaPaquetes: Paquete[] = [
   {
     trackingId: "P-000",
@@ -263,7 +125,6 @@ const listaPaquetes: Paquete[] = [
     },
   },
 ];
-
 /**----------------------------BLOQUE DE ESDRAS ------------
  *Crear descargarManifiesto(): Promise<Paquete[]> con demora de 2s. Implementar
 el 20% de probabilidad de error ("Fallo en sincronización GPS/Almacén") retornando un rechazo
@@ -282,13 +143,29 @@ function descargarManifiesto(): Promise<Paquete[]> {
     }, 2000);
   });
 }
-
 /**----------------------------BLOQUE DE LEONARDO ------------
  *Implementar calcularCostoEnvio(p: Paquete): number: Tarifa base $15 + ($2.5 × km)+ ($1.5 × kg).
  * Si es frágil sumar seguro de $20; si es express multiplicar total por 1.25.
  * Crearfunción adicional para ordenar paquetes de menor a mayor distancia.
  *
  */
+
+function calcularCostoEnvio(p: Paquete): number {
+  let total = 15 + 2.5 * p.distanciaKm + 1.5 * p.pesoKg;
+  if (p.esFragil) {
+    total += 20;
+  }
+
+  if (p.express) {
+    total *= 1.25;
+  }
+
+  return total;
+}
+
+function ordPorDistancia(lista: Paquete[]): Paquete[] {
+  return [...lista].sort((a, b) => a.distanciaKm - b.distanciaKm);
+}
 
 /**----------------------------BLOQUE DE ENRIQUE ------------
  * Consumir la promesa en main.ts con try/catch. Si hay error, cargar un array de respaldo
