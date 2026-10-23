@@ -4,14 +4,14 @@
 
 
 const listaDepaquetes: paquete[] = [
-     { id: 80, 200, fragil:false , express:true, "Jose Gutierres" },
-  { id: 20, 150, fragil:false , express:true , "maria jimenez" },
-  { id: 25, 300, fragil:false , express:true, "andres espina" },
-  { id: 10, 800, fragil:false , express:false , "luis fernandez" },
-  { id: 50, 200, fragil:false , express:true, "fernando torres" },
-  { id: 20, 550, fragil:false , express:true , "julieta afanador" },
-  { id: 80, 35, fragil:false , express:true, "felipe carreño" },
-  { id: 20, 62, fragil:false , express:true , "luisa perez" },
+     { id: pesoKg: 80, distanciaKm: 200, fragil:false , express:true, destinatario: "Jose Gutierres" },
+  { id: pesoKg: 20, distanciaKm: 150, fragil:false , express:true , destinatario: "maria jimenez" },
+  { id: pesoKg: 25, distanciaKm: 300, fragil:false , express:true, destinatario: "andres espina" },
+  { id: pesoKg: 10, distanciaKm: 800, fragil:false , express:false , destinatario: "luis fernandez" },
+  { id: pesoKg: 50, distanciaKm: 200, fragil:false , express:true, destinatario: "fernando torres" },
+  { id: pesoKg: 20, distanciaKm: 550, fragil:false , express:true , destinatario: "julieta afanador" },
+  { id: pesoKg: 80, distanciaKm: 35, fragil:false , express:true, destinatario: "felipe carreño" },
+  { id: pesoKm: 20, distanciaKm: 62, fragil:false , express:true , destinatario: "luisa perez" },
   
 ]; 
 
