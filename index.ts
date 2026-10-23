@@ -21,23 +21,9 @@
 
 
 
-// DEV 2 
-// Crear descargarManifiesto(): Promise<Paquete[]> con demora de 2s. Implementar
-// el 20% de probabilidad de error ("Fallo en sincronización GPS/Almacén") retornando un rechazo
-// tipado.
 
-function descargarManifiesto(): Promise<Paquete[]> {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-        const conexionExitosa = Math.random() >= 0.2;
-            if (conexionExitosa){
-                resolve(dbPaquete);
-            } else {
-                reject(new Error("Error 500: fallo en la sincronización GPS/Almacén"));
-            }         
-        }, 2000);
-    })
-}
+
+
 
 
 
@@ -46,3 +32,138 @@ function descargarManifiesto(): Promise<Paquete[]> {
 
 
 /**----------------------------BLOQUE DE ENRIQUE ------------ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function calcularCostoEnvio(p: Paquete): number {
+    let total = 15 + (2.5 * p.distanciaKm) + (1.5 * p.pesoKg);
+    if (p.esFragil) {
+        total += 20;
+    }
+
+    if (p.express) {
+        total *= 1.25;
+    }
+
+    return total;
+}
+
+function ordPorDistancia (lista: Paquete[]) : Paquete [] {
+    return [...lista].sort(
+        (a, b) => a.distanciaKm - b.distanciaKm
+    )
+}
+    const paquetesOrdenados = ordPorDistancia(dbPaquete);
+    console.log(paquetesOrdenados);
