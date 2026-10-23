@@ -17,7 +17,7 @@ interface Paquete {
 
 const listaPaquetes: Paquete[] = [
   {
-    trackingId: "P-001",
+    trackingId: "P-000",
     pesoKg: 80,
     distanciaKm: 200,
     esFragil: false,
@@ -126,14 +126,18 @@ const listaPaquetes: Paquete[] = [
   },
 ];
 
-/**----------------------------BLOQUE DE ESDRAS ------------ */
+/**----------------------------BLOQUE DE ESDRAS ------------
+ *Crear descargarManifiesto(): Promise<Paquete[]> con demora de 2s. Implementar
+el 20% de probabilidad de error ("Fallo en sincronización GPS/Almacén") retornando un rechazo
+tipado.
+ */
 
 function descargarManifiesto(): Promise<Paquete[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const conexionExitosa = Math.random() >= 0.2;
       if (conexionExitosa) {
-        resolve(dbPaqute);
+        resolve(listaPaquetes);
       } else {
         reject(new Error("Fallo de sincronizacion GPS/Almacen"));
       }
@@ -141,24 +145,15 @@ function descargarManifiesto(): Promise<Paquete[]> {
   });
 }
 
-/**----------------------------BLOQUE DE LEONARDO ------------ */
+/**----------------------------BLOQUE DE LEONARDO ------------
+ *Implementar calcularCostoEnvio(p: Paquete): number: Tarifa base $15 + ($2.5 × km)+ ($1.5 × kg).
+ * Si es frágil sumar seguro de $20; si es express multiplicar total por 1.25.
+ * Crearfunción adicional para ordenar paquetes de menor a mayor distancia.
+ *
+ */
 
-// DEV 2
-// Crear descargarManifiesto(): Promise<Paquete[]> con demora de 2s. Implementar
-// el 20% de probabilidad de error ("Fallo en sincronización GPS/Almacén") retornando un rechazo
-// tipado.
-
-function descargarManifiesto(): Promise<Paquete[]> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const conexionExitosa = Math.random() >= 0.2;
-      if (conexionExitosa) {
-        resolve(dbPaquete);
-      } else {
-        reject(new Error("Error 500: fallo en la sincronización GPS/Almacén"));
-      }
-    }, 2000);
-  });
-}
-
-/**----------------------------BLOQUE DE ENRIQUE ------------ */
+/**----------------------------BLOQUE DE ENRIQUE ------------
+ * Consumir la promesa en main.ts con try/catch. Si hay error, cargar un array de respaldo
+ * local. Imprimir itinerario de chofer con subtotales, costo total a cobrar del camión y paquetes
+ * prioritarios destacados.
+ */
