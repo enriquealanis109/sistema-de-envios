@@ -172,3 +172,86 @@ function ordPorDistancia(lista: Paquete[]): Paquete[] {
  * local. Imprimir itinerario de chofer con subtotales, costo total a cobrar del camión y paquetes
  * prioritarios destacados.
  */
+
+const paquetesRespaldo: Paquete[] = [
+  {
+    trackingId: "R-001",
+    pesoKg: 3,
+    distanciaKm: 4,
+    esFragil: true,
+    express: false,
+    destinatario: {
+      nombre: "ana lopez",
+      direccion: "Calle 20 120",
+      telefono: "8111111111",
+    },
+  },
+  {
+    trackingId: "R-002",
+    pesoKg: 10,
+    distanciaKm: 12,
+    esFragil: false,
+    express: true,
+    destinatario: {
+      nombre: "carlos ruiz",
+      direccion: "Calle 21 45",
+      telefono: "8122222222",
+    },
+  },
+  {
+    trackingId: "R-003",
+    pesoKg: 1.5,
+    distanciaKm: 7,
+    esFragil: false,
+    express: false,
+    destinatario: {
+      nombre: "maria perez",
+      direccion: "Calle 22 300",
+      telefono: "8133333333",
+    },
+  },
+];
+
+async function ejecutarDespacho(): Promise<void> {
+  let paquetes: Paquete[];
+  try {
+    console.log("Descargando manifiesto...");
+    paquetes = await descargarManifiesto();
+    console.log("Manifiesto descargado correctamente.\n");
+  } catch (error) {
+    console.error(`Error: ${(error as Error).message}`);
+    console.log("Cargando array de respaldo local...\n");
+    paquetes = paquetesRespaldo;
+  }
+
+  const ruta = ordPorDistancia(paquetes);
+  let costoTotal = 0;
+
+  console.log("ITINERARIO DEL CHOFER");
+  ruta.forEach((paquete, i) => {
+    const subtotal = calcularCostoEnvio(paquete);
+    costoTotal += subtotal;
+
+    const etiquetas: string[] = [];
+    let prioridad = "";
+    if (paquete.express && paquete.esFragil) {
+      prioridad = " PRIORITARIO (EXPRESS, FRAGIL)";
+    } else if (paquete.express) {
+      prioridad = " PRIORITARIO (EXPRESS)";
+    } else if (paquete.esFragil) {
+      prioridad = " PRIORITARIO (FRAGIL)";
+    }
+
+    console.log(`Parada ${i + 1}: ${paquete.trackingId}${prioridad}`);
+    console.log(`   Destinatario: ${paquete.destinatario.nombre}`);
+    console.log(`   Telefono: ${paquete.destinatario.telefono}`);
+    console.log(`   Direccion: ${paquete.destinatario.direccion}`);
+    console.log(`   Distancia: ${paquete.distanciaKm} km`);
+    console.log(`   Peso: ${paquete.pesoKg} kg`);
+    console.log(`   Subtotal: $${subtotal}`);
+  });
+
+  console.log(`Paquetes en ruta: ${ruta.length}`);
+  console.log(`TOTAL A COBRAR DEL CAMION: $${costoTotal}`);
+}
+ejecutarDespacho();
